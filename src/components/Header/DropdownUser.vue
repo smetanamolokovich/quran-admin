@@ -27,8 +27,8 @@ const handleLogout = async () => {
       @click.prevent="dropdownOpen = !dropdownOpen"
     >
       <span class="hidden text-right lg:block">
-        <span class="block text-sm font-medium text-black dark:text-white">{{ user.username }}</span>
-        <span class="block text-xs font-medium">{{ user.role }}</span>
+        <span class="block text-sm font-medium text-black dark:text-white" v-if="user">{{ user.username }}</span>
+        <span class="block text-xs font-medium" v-if="user">{{ user.role }}</span>
       </span>
 
       <span class="h-12 w-12 rounded-full">

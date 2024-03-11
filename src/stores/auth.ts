@@ -2,10 +2,15 @@
 import {defineStore} from 'pinia'
 import {ref} from 'vue'
 
+export type UserType = {
+    username: string
+    role: string
+}
+
 export const useAuthStore = defineStore('auth', () => {
     const token = ref<null | string>(null)
     const isAuthenticated = ref(false)
-    const user = ref({})
+    const user = ref<UserType | null>(null)
 
     function setToken(newToken: string) {
         token.value = newToken

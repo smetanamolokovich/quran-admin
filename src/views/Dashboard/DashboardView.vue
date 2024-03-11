@@ -16,7 +16,7 @@ const surahId = computed(() => +route.params.id || 1)
 const total = computed(() => versesCount[surahId.value] || 1)
 const length =  computed(() => Math.ceil(total.value / (limit || 10)))
 const page = computed({
-  get: () => +route.query.page || 1,
+  get: () => route.query.page ? +route.query.page : 1,
   set: (value) => {
     router.push({query: {page: value}})
   }
