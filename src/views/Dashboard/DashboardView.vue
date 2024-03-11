@@ -5,11 +5,12 @@ import {type ayatType, getSurahs} from '@/services/quranServices'
 import {computed, ref, watch} from 'vue'
 import {useRoute, useRouter} from 'vue-router'
 import {versesCount} from '@/verseCount'
+import ButtonDefault from '@/components/Buttons/ButtonDefault.vue'
 
 const route = useRoute()
 const router = useRouter()
 
-const limit = 10
+const limit = 6
 
 const surahId = computed(() => +route.params.id || 1)
 const total = computed(() => versesCount[surahId.value] || 1)
@@ -31,17 +32,18 @@ watch([page, surahId], () => {
 </script>
 
 <template>
-  <DefaultLayout>
-    <router-link v-for="ayat in ayats"
-       :key="ayat.id"
-        :to="`/surah/${surahId}/ayat/${ayat.id}`"
-       class="cursor-pointer mb-6 block p-6 bg-white hover:bg-gray-3 dark:hover:bg-meta-4 border border-stroke rounded-sm shadow hover:bg-gray-100 dark:bg-boxdark dark:border-strokedark"
+  <DefaultLayout show-sidebar>
+    <div v-for="ayat in ayats" :key="ayat.id"
+       class="w-full flex items-center justify-between overflow-hidden block p-4 bg-white hover:bg-gray-3 dark:hover:bg-meta-4 border border-stroke hover:bg-gray-100 dark:bg-boxdark dark:border-strokedark"
     >
-      <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">﴾ {{ ayat.text }} ﴿</h5>
-      <p class="font-normal text-gray-700 dark:text-gray-400">{{ ayat.id }}. {{ ayat.translation }}</p>
-    </router-link>
+      <div class="p-6">
+        <h5 class="mb-2 text-xl font-bold leading-tight">﴾ {{ ayat.text }} ﴿</h5>
+        <p class="mt-6 text-xl font-bold leading-relaxed">{{ ayat.id }}. {{ ayat.translation }}</p>
+      </div>
+      <ButtonDefault @click="$router.push(`/surah/${surahId}/ayat/${ayat.id}`)" route="/" label="Редактировать" customClasses="bg-meta-3 text-white rounded-full font-bold" />
+    </div>
 
-    <v-pagination v-if="total > limit" v-model="page" :length="length" :total-visible="5" next-icon="mdi-menu-right"
+    <v-pagination class="mt-4" v-if="total > limit" v-model="page" :length="length" :total-visible="5" next-icon="mdi-menu-right"
                   prev-icon="mdi-menu-left"></v-pagination>
   </DefaultLayout>
 </template>

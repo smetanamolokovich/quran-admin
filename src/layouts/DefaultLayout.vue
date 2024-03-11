@@ -4,13 +4,16 @@ import SidebarArea from '@/components/Sidebar/SidebarArea.vue'
 import {useAuthStore} from '@/stores/auth'
 
 const { isAuthenticated } = useAuthStore()
+defineProps({
+  showSidebar: Boolean,
+})
 </script>
 
 <template>
   <!-- ===== Page Wrapper Start ===== -->
   <div class="flex h-screen overflow-hidden">
     <!-- ===== Sidebar Start ===== -->
-    <SidebarArea v-if="isAuthenticated" />
+    <SidebarArea v-if="isAuthenticated && showSidebar" />
     <!-- ===== Sidebar End ===== -->
 
     <!-- ===== Content Area Start ===== -->

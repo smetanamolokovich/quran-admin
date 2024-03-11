@@ -58,3 +58,17 @@ export const getAyat = async (surahId: number, ayatId: number) => {
 
     return null
 }
+
+export const updateAyat = async (surahId: number, ayatId: number, payload: ayatType) => {
+    const response = await fetchApi(`/surah/${surahId}/ayat/${ayatId}`, {
+        method: 'PUT',
+        body: JSON.stringify(payload),
+    })
+
+    if (response) {
+        const data = await response.json()
+        return data
+    }
+
+    return null
+}

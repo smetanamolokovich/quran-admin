@@ -6,6 +6,7 @@ import 'flatpickr/dist/flatpickr.min.css'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import VueApexCharts from 'vue3-apexcharts'
+import ToastService from 'primevue/toastservice'
 
 import App from './App.vue'
 import router from './router'
@@ -27,5 +28,6 @@ app.use(router)
 app.use(VueApexCharts)
 app.use(vuetify)
 app.use(PrimeVue)
+app.use(ToastService)
 
 app.mount('#app')
