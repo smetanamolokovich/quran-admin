@@ -88,7 +88,7 @@ const menuItems = computed(() => {
         </svg>
       </div>
       <input v-model="searchText" type="search" id="default-search"
-             class="block w-[90%] p-2 ps-10 text-sm text-gray-900 border border-gray-300 outline-none transition active:border-primary disabled:cursor-default disabled:bg-whiter text-white border-form-strokedark bg-form-input focus:border-primary"
+             class="rounded-md block w-[90%] p-2 ps-10 text-sm text-gray-900 border border-gray-300 outline-none transition active:border-primary disabled:cursor-default disabled:bg-whiter text-white border-form-strokedark bg-form-input focus:border-primary"
              placeholder="Поиск сур..." required/>
     </div>
 

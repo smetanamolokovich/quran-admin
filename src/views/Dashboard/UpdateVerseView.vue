@@ -2,10 +2,11 @@
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import Editor, {type EditorTextChangeEvent} from 'primevue/editor'
 
-import {reactive, ref} from 'vue'
+import {computed, reactive, ref, watch} from 'vue'
 import {getAyat, updateAyat} from '@/services/quranServices'
 import {useRoute} from 'vue-router'
 import {useToast} from 'primevue/usetoast'
+import {versesCount} from '@/verseCount'
 
 const route = useRoute()
 const toast = useToast()
@@ -17,15 +18,20 @@ const ayat = reactive({
   id: 0,
 })
 const loading = ref(false)
+const limit = computed(() => versesCount[+route.params.id] || 1)
+const page = computed(() => +route.params.ayatId)
 
-getAyat(+route.params.id, +route.params.ayatId).then((res) => {
-  const {translation, tafsir, id, text} = res.ayats[0]
+const getAyatData = async () => {
+  const res = await getAyat(+route.params.id, +route.params.ayatId)
+  const {translation, tafsir, text, id} = res.ayats[0]
 
-  ayat.id = id
+  ayat.translation = translation
+  ayat.tafsir = tafsir
   ayat.text = text
-  ayat.translation = translation || ''
-  ayat.tafsir = tafsir || ''
-})
+  ayat.id = id
+}
+
+watch(page, async () => await getAyatData(), { immediate: true })
 
 function replaceTags(html: string) {
   // Replace <p> or </p> with ''
@@ -86,37 +92,51 @@ const handleSubmit = () => {
 </script>
 
 <template>
-  <div>
-    <DefaultLayout>
-      <a @click="$router.go(-1)"
-          class="cursor-pointer font-bold text-black-600 dark:text-blue-500 hover:underline"
-      >← Назад</a
-      >
-      <div class="flex flex-col gap-10 mt-4">
-        <div class="flex flex-col gap-5 mb-6">
-          <h1 class="text-2xl font-bold">Изменить перевод:</h1>
-          <Editor v-model="ayat.translation" style="height: 120px" @text-change="textChange">
-            <template v-slot:toolbar>
-              <span class="ql-formats">
-                  <button v-tooltip.bottom="'Bold'" class="ql-bold"></button>
-                  <button v-tooltip.bottom="'Italic'" class="ql-italic"></button>
-                  <button v-tooltip.bottom="'Underline'" class="ql-underline"></button>
-              </span>
-            </template>
-          </Editor>
-        </div>
-        <div class="flex flex-col gap-5">
-          <h1 class="text-2xl font-bold">Тафсир:</h1>
-          <Editor v-model="ayat.tafsir" style="height: 280px" @text-change="textTafsirChange" placeholder="Нет тафсира для данного аята...">
-            <template v-slot:toolbar>
-              <span class="ql-formats">
-                  <button v-tooltip.bottom="'Bold'" class="ql-bold"></button>
-                  <button v-tooltip.bottom="'Italic'" class="ql-italic"></button>
-                  <button v-tooltip.bottom="'Underline'" class="ql-underline"></button>
-              </span>
-            </template>
-          </Editor>
-        </div>
+  <DefaultLayout>
+    <div class="flex flex-col gap-10 mt-4">
+      <div class="w-full h-8 relative">
+        <a v-if="+route.params.ayatId > 1"
+           @click="$router.push(`/surah/${+route.params.id}/ayat/${+route.params.ayatId - 1}`)"
+           class="absolute left-0 cursor-pointer font-bold text-black-600 dark:text-blue-500 hover:underline"
+        >← Аят номер {{ +route.params.ayatId - 1 }}</a>
+
+        <a v-if="limit > +route.params.ayatId"
+           @click="$router.push(`/surah/${+route.params.id}/ayat/${+route.params.ayatId + 1}`)"
+           class="absolute right-0 cursor-pointer font-bold text-black-600 dark:text-blue-500 hover:underline"
+        > Аят номер {{ +route.params.ayatId + 1 }} →</a>
+      </div>
+      <div class="flex flex-col gap-5 mb-6">
+        <h1 class="text-2xl font-bold">Перевод:</h1>
+        <Editor v-model="ayat.translation" editorStyle="height: 120px; fontSize: 16px;" @text-change="textChange">
+          <template v-slot:toolbar>
+            <span class="ql-formats">
+                <button v-tooltip.bottom="'Bold'" class="ql-bold"></button>
+                <button v-tooltip.bottom="'Italic'" class="ql-italic"></button>
+                <button v-tooltip.bottom="'Underline'" class="ql-underline"></button>
+            </span>
+          </template>
+        </Editor>
+      </div>
+      <div class="flex flex-col gap-5">
+        <h1 class="text-2xl font-bold">Тафсир:</h1>
+        <Editor v-model="ayat.tafsir" editorStyle="height: 280px; fontSize: 16px;" @text-change="textTafsirChange" placeholder="Нет тафсира для данного аята...">
+          <template v-slot:toolbar>
+            <span class="ql-formats">
+                <button v-tooltip.bottom="'Bold'" class="ql-bold"></button>
+                <button v-tooltip.bottom="'Italic'" class="ql-italic"></button>
+                <button v-tooltip.bottom="'Underline'" class="ql-underline"></button>
+            </span>
+          </template>
+        </Editor>
+      </div>
+      <div class="flex justify-between">
+        <button
+            type="button"
+            class="self-start max-w-[180px] mt-4 focus:outline-none text-white bg-red hover:bg-danger focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+            @click="$router.push(`/surah/${+route.params.id}`)"
+        >
+          Назад
+        </button>
         <button
             v-if="!loading"
             type="button"
@@ -133,6 +153,6 @@ const handleSubmit = () => {
           Сохранение...
         </button>
       </div>
-    </DefaultLayout>
-  </div>
+    </div>
+  </DefaultLayout>
 </template>

@@ -64,12 +64,12 @@ watchDebounced(
         </svg>
       </div>
       <input v-model="filterText" type="search" id="default-search"
-             class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:text-white dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+             class="block w-full p-4 ps-10 rounded-md text-sm text-gray-900 border border-stroke outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:text-white dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
              placeholder="Поиск по тексту..." required/>
     </div>
 
     <div
-        class="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1"
+        class="max-h-[75vh] overflow-y-scroll rounded-md border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1"
     >
       <div class="max-w-full overflow-x-auto">
         <table class="w-full table-auto">
@@ -88,7 +88,7 @@ watchDebounced(
           </tr>
           </thead>
           <tbody>
-          <tr v-for="ayat in ayats" :key="ayat.id">
+            <tr v-for="ayat in ayats" :key="ayat.id">
             <td class="py-5 px-4">
               <p class="text-black dark:text-white text-center">{{ ayat.id }}</p>
             </td>

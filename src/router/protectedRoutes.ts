@@ -1,5 +1,5 @@
 import DashboardView from '@/views/Dashboard/DashboardView.vue'
-import UpdateVerseView from '@/views/UpdateVerseView.vue'
+import UpdateVerseView from '@/views/Dashboard/UpdateVerseView.vue'
 
 export const protectedRoutes = [
     {
