@@ -5,7 +5,7 @@ const props = defineProps(['subtitle', 'title', 'customClasses'])
 <template>
   <!-- ====== Forms Section Start -->
   <div
-    class="w-[700px] m-auto rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
+    class="max-w-[700px] sm:w-full m-auto rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
   >
     <div class="flex flex-wrap items-center">
       <div class="w-full border-stroke dark:border-strokedark">
