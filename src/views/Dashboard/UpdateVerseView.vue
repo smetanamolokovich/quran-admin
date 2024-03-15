@@ -93,7 +93,7 @@ const handleSubmit = () => {
 
 <template>
   <DefaultLayout>
-    <div class="flex flex-col gap-10 mt-4">
+    <div class="flex flex-col gap-6 mt-4">
       <div class="w-full h-8 relative">
         <a v-if="+route.params.ayatId > 1"
            @click="$router.push(`/surah/${+route.params.id}/ayat/${+route.params.ayatId - 1}`)"
