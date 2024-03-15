@@ -13,6 +13,14 @@ type SurahNames = {
 
 const surahsLoading = ref(true)
 const surahNames = ref<SurahNames[]>([])
+const searchText = ref('')
+
+// find surahs by search text and id
+const filteredSurahs = computed(() => {
+  return surahNames.value.filter((surah) => {
+    return `${surah.surahId} ${surah.title}`.toLowerCase().includes(searchText.value.toLowerCase())
+  })
+})
 
 getSurahNames().then((res) => {
   surahNames.value = res
@@ -28,7 +36,7 @@ onClickOutside(target, () => {
 })
 
 const menuItems = computed(() => {
-  return (surahNames.value || []).map((surah) => {
+  return (filteredSurahs.value || []).map((surah) => {
     return {
       label: surah.title,
       route: `/surah/${surah.surahId}`,
@@ -71,9 +79,22 @@ const menuItems = computed(() => {
     </div>
     <!-- SIDEBAR HEADER -->
 
+    <div class="relative w-full pl-6">
+      <div class="absolute inset-y-0 start-0 flex items-center ps-9 pointer-events-none">
+        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+             fill="none" viewBox="0 0 20 20">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+        </svg>
+      </div>
+      <input v-model="searchText" type="search" id="default-search"
+             class="block w-[90%] p-2 ps-10 text-sm text-gray-900 border border-gray-300 outline-none transition active:border-primary disabled:cursor-default disabled:bg-whiter text-white border-form-strokedark bg-form-input focus:border-primary"
+             placeholder="Поиск сур..." required/>
+    </div>
+
     <div class="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
       <!-- Sidebar Menu -->
-      <div class="scroll-auto	mt-5 py-4 px-4 lg:mt-9 lg:px-6">
+      <div class="scroll-auto	mt-5 py-4 px-4 lg:mt-2 lg:px-6">
         <h3 class="mb-4 text-lg font-bold text-bodydark2">Список сур</h3>
 
         <div class="flex gap-2" v-if="surahsLoading">

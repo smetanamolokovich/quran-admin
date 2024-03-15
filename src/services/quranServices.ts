@@ -4,9 +4,11 @@ type payloadSurahs = {
     page: number,
     limit: number,
     surahId: number,
+    filter: string,
+    sort: string,
 }
 
-type responseSurahs = {
+export type responseSurahs = {
     ayats: ayatType[],
     surahId: number,
     title: string,
@@ -17,11 +19,12 @@ export type ayatType = {
     text: string,
     translation: string,
     tafsir: string,
+    updatedAt?: string,
 }
 
-export const getSurahs = async ({ page, limit, surahId }: payloadSurahs): Promise<responseSurahs | null> => {
-    const query = new URLSearchParams({ start: page.toString(), end: limit.toString() })
-    const response = await fetchApi(`/surah/${surahId}?${query.toString()}`, {
+export const getSurahs = async ({ page, limit, surahId, filter, sort }: payloadSurahs): Promise<responseSurahs | null> => {
+    const query = `start=${page}&end=${limit}&filter=${decodeURIComponent(filter)}&sort=${sort}`
+    const response = await fetchApi(`/surah/${surahId}?${query}`, {
         method: 'GET',
     })
 

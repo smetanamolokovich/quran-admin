@@ -94,8 +94,6 @@ const handleSubmit = () => {
       >
       <div class="flex flex-col gap-10 mt-4">
         <div class="flex flex-col gap-5 mb-6">
-          <h1 dir="rtl" class="text-2xl font-bold">Сура {{ route.params.id }}, аят {{ route.params.ayatId }}</h1>
-          <h1 dir="rtl" class="text-4xl font-bold mb-6">﴿ {{ ayat.text }} ﴾</h1>
           <h1 class="text-2xl font-bold">Изменить перевод:</h1>
           <Editor v-model="ayat.translation" style="height: 120px" @text-change="textChange">
             <template v-slot:toolbar>

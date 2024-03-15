@@ -6,7 +6,7 @@ import SidebarDropdown from './SidebarDropdown.vue'
 const sidebarStore = useSidebarStore()
 
 const props = defineProps(['item', 'index'])
-const currentPage = useRoute().name
+const currentPage = useRoute().params.surahId
 
 interface SidebarItem {
   label: string
