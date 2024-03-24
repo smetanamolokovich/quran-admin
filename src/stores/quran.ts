@@ -11,13 +11,21 @@ export const useQuranStore = defineStore('quran', () => {
     const surahsLoading = ref(false)
 
     function setSurahNames(names: SurahNames[]) {
-        console.log('setSurahNames', names)
         surahNames.value = names
+    }
+
+    function setSurahTitleById(surahId: number, title: string) {
+        const surah = surahNames.value.find((surah) => surah.surahId === surahId)
+        if (surah) {
+            surah.title = title
+        }
+
+        surahNames.value = [...surahNames.value]
     }
 
     function setSurahsLoading(loading: boolean) {
         surahsLoading.value = loading
     }
 
-    return { surahNames, setSurahNames, setSurahsLoading, surahsLoading }
+    return { surahNames, setSurahNames, setSurahsLoading, surahsLoading, setSurahTitleById }
 })

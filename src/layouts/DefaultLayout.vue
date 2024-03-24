@@ -2,6 +2,8 @@
 import HeaderArea from '@/components/Header/HeaderArea.vue'
 import SidebarArea from '@/components/Sidebar/SidebarArea.vue'
 import {useAuthStore} from '@/stores/auth'
+import {onMounted} from 'vue'
+import {getSurahNames} from '@/services/quranServices'
 
 const { isAuthenticated } = useAuthStore()
 defineProps({

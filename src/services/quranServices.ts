@@ -1,4 +1,5 @@
 import {fetchApi} from '@/helpers/fetchApi'
+import {useQuranStore} from '@/stores/quran'
 
 type payloadSurahs = {
     page: number,
@@ -37,8 +38,24 @@ export const getSurahs = async ({ page, limit, surahId, filter, sort }: payloadS
 }
 
 export const getSurahNames = async () => {
+    const { setSurahNames } = useQuranStore()
     const response = await fetchApi('/surahNames', {
         method: 'GET',
+    })
+
+    if (response) {
+        const data = await response.json()
+        setSurahNames(data)
+        return data
+    }
+
+    return null
+}
+
+export const updateSurahTitle = async (surahId: number, title: string) => {
+    const response = await fetchApi(`/surah-title/${surahId}`, {
+        method: 'PUT',
+        body: JSON.stringify({ title }),
     })
 
     if (response) {
