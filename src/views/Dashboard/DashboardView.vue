@@ -11,6 +11,7 @@ import {watchDebounced} from '@vueuse/core'
 import {useToast} from 'primevue/usetoast'
 import Spinner from '@/components/Images/Spinner.vue'
 import {useQuranStore} from '@/stores/quran'
+import Timestamp from '@/components/Timestamp.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -127,7 +128,9 @@ watchDebounced(
               <p class="text-md truncate">{{ ayat.translation }}</p>
             </td>
             <td class="py-5 px-4">
-              <p class="text-black dark:text-white">{{ ayat.updatedAt || '-' }}</p>
+              <p class="text-black dark:text-white">
+                <Timestamp :timestamp="ayat.updatedDate" is-today />
+              </p>
             </td>
             <td class="py-5 px-4">
               <div class="flex items-center justify-center space-x-3.5">

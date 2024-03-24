@@ -20,7 +20,7 @@ export type ayatType = {
     text: string,
     translation: string,
     tafsir: string,
-    updatedAt?: string,
+    updatedDate?: string,
 }
 
 export const getSurahs = async ({ page, limit, surahId, filter, sort }: payloadSurahs): Promise<responseSurahs | null> => {
