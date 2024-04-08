@@ -2,10 +2,20 @@ FROM node:21-alpine3.18
 
 WORKDIR /app
 COPY package*.json ./
+COPY tsconfig.json ./
+COPY tsconfig.node.json ./
+COPY tsconfig.app.json ./
+COPY src ./src
+COPY public ./public
+COPY .env ./
+COPY vite.config.ts ./
+COPY tailwind.config.js ./
+COPY postcss.config.js ./
+COPY index.html ./
 
 RUN npm install pm2 -g
 RUN npm install
-RUN npm run build-only
+RUN npm run build
 
 COPY . .
 
