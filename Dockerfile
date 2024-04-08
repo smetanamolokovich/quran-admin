@@ -12,6 +12,7 @@ COPY vite.config.ts ./
 COPY tailwind.config.js ./
 COPY postcss.config.js ./
 COPY index.html ./
+COPY env.d.ts ./
 
 RUN npm install pm2 -g
 RUN npm install
