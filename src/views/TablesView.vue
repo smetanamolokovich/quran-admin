@@ -18,7 +18,6 @@ const pageTitle = ref('Tables')
     <div class="flex flex-col gap-10">
       <TableOne />
       <TableTwo />
-      <TableThree />
     </div>
   </DefaultLayout>
 </template>

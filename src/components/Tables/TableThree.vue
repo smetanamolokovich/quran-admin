@@ -38,7 +38,7 @@ defineProps({
               <p class="text-sm truncate">{{ ayat.translation }}</p>
             </td>
             <td class="py-5 px-4">
-              <p class="text-black dark:text-white">{{ ayat.updatedAt || '-' }}</p>
+              <p class="text-black dark:text-white">{{ ayat.updatedDate || '-' }}</p>
             </td>
             <td class="py-5 px-4">
               <div class="flex items-center justify-center space-x-3.5">
