@@ -19,7 +19,5 @@ RUN npm run build
 
 COPY . .
 
-FROM nginx:stable-alpine as production-stage
-COPY --from=build-app /app/dist /usr/share/nginx/html
 EXPOSE 8000
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["npm", "run", "preview"]
