@@ -92,7 +92,7 @@ const handleSubmit = () => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-6 mt-4">
+  <DefaultLayout>
     <div class="w-full h-8 relative">
       <a v-if="+route.params.ayatId > 1"
          @click="$router.push(`/surah/${+route.params.id}/ayat/${+route.params.ayatId - 1}`)"
@@ -152,7 +152,6 @@ const handleSubmit = () => {
         Сохранение...
       </button>
     </div>
-  </div>
   </DefaultLayout>
 </template>
 <style scoped>
