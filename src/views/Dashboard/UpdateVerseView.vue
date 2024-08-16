@@ -92,7 +92,7 @@ const handleSubmit = () => {
 </script>
 
 <template>
-  <DefaultLayout>
+  <div class="flex flex-col gap-6 mt-4">
     <div class="w-full h-8 relative">
       <a v-if="+route.params.ayatId > 1"
          @click="$router.push(`/surah/${+route.params.id}/ayat/${+route.params.ayatId - 1}`)"
@@ -104,31 +104,29 @@ const handleSubmit = () => {
          class="absolute right-0 cursor-pointer font-bold text-black-600 dark:text-blue-500 hover:underline"
       > Аят номер {{ +route.params.ayatId + 1 }} →</a>
     </div>
-    <div class="flex gap-6 mt-4">
-      <div class="flex flex-col gap-5 mb-6 basis-1/4">
-        <h1 class="text-2xl font-bold">Перевод:</h1>
-        <Editor v-model="ayat.translation" editorStyle="height: 60vh; fontSize: 16px; line-height: 1.6;" @text-change="textChange">
-          <template v-slot:toolbar>
+    <div class="flex flex-col gap-5 mb-6">
+      <h1 class="text-2xl font-bold">Перевод:</h1>
+      <Editor v-model="ayat.translation" editorStyle="height: 120px; fontSize: 16px;" @text-change="textChange">
+        <template v-slot:toolbar>
             <span class="ql-formats">
                 <button v-tooltip.bottom="'Bold'" class="ql-bold"></button>
                 <button v-tooltip.bottom="'Italic'" class="ql-italic"></button>
                 <button v-tooltip.bottom="'Underline'" class="ql-underline"></button>
             </span>
-          </template>
-        </Editor>
-      </div>
-      <div class="flex flex-col gap-5 basis-3/4">
-        <h1 class="text-2xl font-bold">Тафсир:</h1>
-        <Editor v-model="ayat.tafsir" editorStyle="height: 60vh; fontSize: 16px; line-height: 1.6;" @text-change="textTafsirChange" placeholder="Нет тафсира для данного аята...">
-          <template v-slot:toolbar>
+        </template>
+      </Editor>
+    </div>
+    <div class="flex flex-col gap-5">
+      <h1 class="text-2xl font-bold">Тафсир:</h1>
+      <Editor v-model="ayat.tafsir" editorStyle="height: 280px; fontSize: 16px;" @text-change="textTafsirChange" placeholder="Нет тафсира для данного аята...">
+        <template v-slot:toolbar>
             <span class="ql-formats">
                 <button v-tooltip.bottom="'Bold'" class="ql-bold"></button>
                 <button v-tooltip.bottom="'Italic'" class="ql-italic"></button>
                 <button v-tooltip.bottom="'Underline'" class="ql-underline"></button>
             </span>
-          </template>
-        </Editor>
-      </div>
+        </template>
+      </Editor>
     </div>
     <div class="flex justify-between">
       <button
@@ -141,10 +139,10 @@ const handleSubmit = () => {
       <button
           v-if="!loading"
           type="button"
-          class="self-end max-w-[200px] mt-4 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+          class="self-end max-w-[180px] mt-4 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
           @click="handleSubmit"
       >
-        Сохранить изменения
+        Сохранить изменени
       </button>
       <button v-else disabled type="button" class="self-end max-w-[180px] mt-4 py-2.5 px-5 me-2 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 focus:z-10 focus:ring-4 focus:outline-none focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 inline-flex items-center">
         <svg aria-hidden="true" role="status" class="inline w-4 h-4 me-3 text-gray-200 animate-spin dark:text-gray-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -154,6 +152,7 @@ const handleSubmit = () => {
         Сохранение...
       </button>
     </div>
+  </div>
   </DefaultLayout>
 </template>
 <style scoped>
